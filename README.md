@@ -1,6 +1,6 @@
 # Sublime Text 2 plugin: Fillerati
 
-Fillerati fetches random text from Fillerati service and pastes the result in the view.
+This plugin fetches random text from [Fillerati service](http://www.fillerati.com) and pastes the result in the view.
 
 ## Install
 

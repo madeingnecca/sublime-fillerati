@@ -8,12 +8,12 @@ import random
 
 class FilleratiCommand(sublime_plugin.TextCommand):
 
-    def run(self, edit, n=300):
+    def run(self, edit, n=300, b=None):
 
         # Api url and books in config.
         settings = sublime.load_settings('Fillerati.sublime-settings')
-        api_url = settings.get("api_url")
-        books = settings.get("books")
+        api_url = settings.get('api_url')
+        books = settings.get('books')
 
         count = len(self.view.sel())
         completes = []
@@ -48,8 +48,11 @@ class FilleratiCommand(sublime_plugin.TextCommand):
 
         # Start all threads, process results once all have finished
         for region in self.view.sel():
-            # Random book.
-            book = random.choice(books.keys())
+            # If no book in param, choose random one.
+            if b is None:
+                book = random.choice(books.keys())
+            else:
+                book = b
             # Random paragraph.
             para = random.choice(range(books[book]))
 
@@ -62,10 +65,10 @@ class FilleratiCommand(sublime_plugin.TextCommand):
 
     def complete(self, edit, region, result, n):
 
-        paragraphs = "".join(result["p"])
+        paragraphs = ''.join(result['p'])
         content = paragraphs[:n]
 
-        chapter = "".join(result["ch"])
+        chapter = ''.join(result['ch'])
 
         if region.empty():
             self.view.insert(edit, region.begin(), content)
